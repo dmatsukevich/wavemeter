@@ -25,7 +25,6 @@ class wavemeter_defs(object):
     cNotifyInstallCallbackEx = 4
     cNotifyInstallWaitEventEx = 5
 
-
     # enum for units
     cReturnWavelengthVac = 0;
     cReturnWavelengthAir = 1;
@@ -33,6 +32,22 @@ class wavemeter_defs(object):
     cReturnWavenumber = 3;
     cReturnPhotonEnergy = 4;
 
+
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
+class GetFuncError(Error):
+    def __init__(self, value):
+        self.value = value
+        self.message(value)
+
+    def message(self, value):
+        return {
+        'a': 1,
+        'b': 2,
+        }.get(x, 9)
+        
 
 class wavemeter(object):
     def __init__(self):
