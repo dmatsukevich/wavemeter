@@ -150,9 +150,14 @@ class GetFuncError(Error):
         
 
 class wavemeter(object):
+    """Wrapper for wavemeter function calls"""
     def __init__(self):
 #        self.wm = CDLL("C:\Windows\System32\wlmData.dll")
-        self.wm = WinDLL("C:\Windows\System32\wlmData.dll")
+        try:
+            self.wm = WinDLL("C:\Windows\System32\wlmData.dll")
+        except:
+            self.wm = None
+            
         self.df = wavemeter_defs()
 
     def GetWavelengthNum(self, ch):

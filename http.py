@@ -6,7 +6,9 @@ Created on Jul 31, 2013
 import sys
 import BaseHTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
+from wavedata import WavemeterData
 
+wd = WavemeterData()
 
 class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -14,12 +16,15 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
         print self.path, "\n", filepath
         # special treatment for wavemeter page requests
         if (self.path == "/wavemeter.html"):
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write("This is a test page for the a wavemeter\n")
-            self.wfile.write('\n')
+            self.wavemeter_html()
         else:
             SimpleHTTPRequestHandler.do_GET(self)
+
+# process request for wavemeter data
+    def wavemeter_html(self):
+        self.send_response(200)
+        self.end_headers()
+        wd.writeData(self.wfile)
 
 
 # execute this if we started this file
