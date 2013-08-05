@@ -26,11 +26,11 @@ class wavemeter_defs(object):
     cNotifyInstallWaitEventEx = 5
 
     # enum for units
-    cReturnWavelengthVac = 0;
-    cReturnWavelengthAir = 1;
-    cReturnFrequency = 2;
-    cReturnWavenumber = 3;
-    cReturnPhotonEnergy = 4;
+    cReturnWavelengthVac = 0
+    cReturnWavelengthAir = 1
+    cReturnFrequency = 2
+    cReturnWavenumber = 3
+    cReturnPhotonEnergy = 4
 
     # enum for Set ... functions
     ResERR_NoErr = 0
@@ -55,31 +55,249 @@ class wavemeter_defs(object):
     ResERR_TriggerWaiting = -19
 
     # enum for Get ... functions
-    ErrNoValue = 0;
-    ErrNoSignal = -1;
-    ErrBadSignal = -2;
-    ErrLowSignal = -3;
-    ErrBigSignal = -4;
-    ErrWlmMissing = -5;
-    ErrNotAvailable = -6;
-    InfNothingChanged = -7;
-    ErrNoPulse = -8;
-    ErrDiv0 = -13;
-    ErrOutOfRange = -14;
-    ErrUnitNotAvailable = -15;
-    ErrMaxErr = ErrUnitNotAvailable;
+    ErrNoValue = 0
+    ErrNoSignal = -1
+    ErrBadSignal = -2
+    ErrLowSignal = -3
+    ErrBigSignal = -4
+    ErrWlmMissing = -5
+    ErrNotAvailable = -6
+    InfNothingChanged = -7
+    ErrNoPulse = -8
+    ErrDiv0 = -13
+    ErrOutOfRange = -14
+    ErrUnitNotAvailable = -15
+    ErrMaxErr = ErrUnitNotAvailable
 
     # Return errorvalues of GetTemperature and GetPressure
-    ErrTemperature = -1000;
-    ErrTempNotMeasured = ErrTemperature + ErrNoValue;
-    ErrTempNotAvailable = ErrTemperature + ErrNotAvailable;
-    ErrTempWlmMissing = ErrTemperature + ErrWlmMissing;
+    ErrTemperature = -1000
+    ErrTempNotMeasured = ErrTemperature + ErrNoValue
+    ErrTempNotAvailable = ErrTemperature + ErrNotAvailable
+    ErrTempWlmMissing = ErrTemperature + ErrWlmMissing
 
     # Return errorvalues of GetDistance
     # real errorvalues are ErrDistance combined with those of GetWavelength
-    ErrDistance = -1000000000;
-    ErrDistanceNotAvailable = ErrDistance + ErrNotAvailable;
-    ErrDistanceWlmMissing = ErrDistance + ErrWlmMissing;
+    ErrDistance = -1000000000
+    ErrDistanceNotAvailable = ErrDistance + ErrNotAvailable
+    ErrDistanceWlmMissing = ErrDistance + ErrWlmMissing
+    
+    # Mode Constants for Callback-Export and WaitForWLMEvent-function
+    cmiResultMode = 1
+    cmiRange = 2
+    cmiPulse = 3
+    cmiPulseMode = cmiPulse
+    cmiWideLine = 4
+    cmiWideMode = cmiWideLine
+    cmiFast = 5
+    cmiFastMode = cmiFast
+    cmiExposureMode = 6
+    cmiExposureValue1 = 7
+    cmiExposureValue2 = 8
+    cmiDelay = 9
+    cmiShift = 10
+    cmiShift2 = 11
+    cmiReduce = 12
+    cmiReduced = cmiReduce
+    cmiScale = 13
+    cmiTemperature = 14
+    cmiLink = 15
+    cmiOperation = 16
+    cmiDisplayMode = 17
+    cmiPattern1a = 18
+    cmiPattern1b = 19
+    cmiPattern2a = 20
+    cmiPattern2b = 21
+    cmiMin1 = 22
+    cmiMax1 = 23
+    cmiMin2 = 24
+    cmiMax2 = 25
+    cmiNowTick = 26
+    cmiCallback = 27
+    cmiFrequency1 = 28
+    cmiFrequency2 = 29
+    cmiDLLDetach = 30
+    cmiVersion = 31
+    cmiAnalysisMode = 32
+    cmiDeviationMode = 33
+    cmiDeviationReference = 34
+    cmiDeviationSensitivity = 35
+    cmiAppearance = 36
+    cmiAutoCalMode = 37
+    cmiWavelength1 = 42
+    cmiWavelength2 = 43
+    cmiLinewidth = 44
+    cmiLinewidthMode = 45
+    cmiLinkDlg = 56
+    cmiAnalysis = 57
+    cmiAnalogIn = 66
+    cmiAnalogOut = 67
+    cmiDistance = 69
+    cmiWavelength3 = 90
+    cmiWavelength4 = 91
+    cmiWavelength5 = 92
+    cmiWavelength6 = 93
+    cmiWavelength7 = 94
+    cmiWavelength8 = 95
+    cmiVersion0 = cmiVersion
+    cmiVersion1 = 96
+    cmiDLLAttach = 121
+    cmiSwitcherSignal = 123
+    cmiSwitcherMode = 124
+    cmiExposureValue11 = cmiExposureValue1
+    cmiExposureValue12 = 125
+    cmiExposureValue13 = 126
+    cmiExposureValue14 = 127
+    cmiExposureValue15 = 128
+    cmiExposureValue16 = 129
+    cmiExposureValue17 = 130
+    cmiExposureValue18 = 131
+    cmiExposureValue21 = cmiExposureValue2
+    cmiExposureValue22 = 132
+    cmiExposureValue23 = 133
+    cmiExposureValue24 = 134
+    cmiExposureValue25 = 135
+    cmiExposureValue26 = 136
+    cmiExposureValue27 = 137
+    cmiExposureValue28 = 138
+    cmiPatternAverage = 139
+    cmiPatternAvg1 = 140
+    cmiPatternAvg2 = 141
+    cmiAnalogOut1 = cmiAnalogOut
+    cmiAnalogOut2 = 142
+    cmiMin11 = cmiMin1
+    cmiMin12 = 146
+    cmiMin13 = 147
+    cmiMin14 = 148
+    cmiMin15 = 149
+    cmiMin16 = 150
+    cmiMin17 = 151
+    cmiMin18 = 152
+    cmiMin21 = cmiMin2
+    cmiMin22 = 153
+    cmiMin23 = 154
+    cmiMin24 = 155
+    cmiMin25 = 156
+    cmiMin26 = 157
+    cmiMin27 = 158
+    cmiMin28 = 159
+    cmiMax11 = cmiMax1
+    cmiMax12 = 160
+    cmiMax13 = 161
+    cmiMax14 = 162
+    cmiMax15 = 163
+    cmiMax16 = 164
+    cmiMax17 = 165
+    cmiMax18 = 166
+    cmiMax21 = cmiMax2
+    cmiMax22 = 167
+    cmiMax23 = 168
+    cmiMax24 = 169
+    cmiMax25 = 170
+    cmiMax26 = 171
+    cmiMax27 = 172
+    cmiMax28 = 173
+    cmiAvg11 = cmiPatternAvg1
+    cmiAvg12 = 174
+    cmiAvg13 = 175
+    cmiAvg14 = 176
+    cmiAvg15 = 177
+    cmiAvg16 = 178
+    cmiAvg17 = 179
+    cmiAvg18 = 180
+    cmiAvg21 = cmiPatternAvg2
+    cmiAvg22 = 181
+    cmiAvg23 = 182
+    cmiAvg24 = 183
+    cmiAvg25 = 184
+    cmiAvg26 = 185
+    cmiAvg27 = 186
+    cmiAvg28 = 187
+    cmiPatternAnalysisWritten = 202
+    cmiSwitcherChannel = 203
+    cmiAnalogOut3 = 237
+    cmiAnalogOut4 = 238
+    cmiAnalogOut5 = 239
+    cmiAnalogOut6 = 240
+    cmiAnalogOut7 = 241
+    cmiAnalogOut8 = 242
+    cmiIntensity = 251
+    cmiPower = 267
+    cmiActiveChannel = 300
+    cmiPIDCourse = 1030
+    cmiPIDUseTa = 1031
+    cmiPIDUseT = cmiPIDUseTa
+    cmiPID_T = 1033
+    cmiPID_P = 1034
+    cmiPID_I = 1035
+    cmiPID_D = 1036
+    cmiDeviationSensitivityDim = 1040
+    cmiDeviationSensitivityFactor = 1037
+    cmiDeviationPolarity = 1038
+    cmiDeviationSensitivityEx = 1039
+    cmiDeviationUnit = 1041
+    cmiPIDConstdt = 1059
+    cmiPID_dt = 1060
+    cmiPID_AutoClearHistory = 1061
+    cmiDeviationChannel = 1063
+    cmiAutoCalPeriod = 1120
+    cmiAutoCalUnit = 1121
+    cmiServerInitialized = 1124
+    cmiWavelength9 = 1130
+    cmiExposureValue19 = 1155
+    cmiExposureValue29 = 1180
+    cmiMin19 = 1205
+    cmiMin29 = 1230
+    cmiMax19 = 1255
+    cmiMax29 = 1280
+    cmiAvg19 = 1305
+    cmiAvg29 = 1330
+    cmiWavelength10 = 1355
+    cmiWavelength11 = 1356
+    cmiWavelength12 = 1357
+    cmiWavelength13 = 1358
+    cmiWavelength14 = 1359
+    cmiWavelength15 = 1360
+    cmiWavelength16 = 1361
+    cmiWavelength17 = 1362
+    cmiExternalInput = 1400
+    cmiPressure = 1465
+    cmiBackground = 1475
+    cmiDistanceMode = 1476
+    cmiInterval = 1477
+    cmiIntervalMode = 1478
+    cmiCalibrationEffect = 1480
+    cmiLinewidth1 = cmiLinewidth
+    cmiLinewidth2 = 1481
+    cmiLinewidth3 = 1482
+    cmiLinewidth4 = 1483
+    cmiLinewidth5 = 1484
+    cmiLinewidth6 = 1485
+    cmiLinewidth7 = 1486
+    cmiLinewidth8 = 1487
+    cmiLinewidth9 = 1488
+    cmiLinewidth10 = 1489
+    cmiLinewidth11 = 1490
+    cmiLinewidth12 = 1491
+    cmiLinewidth13 = 1492
+    cmiLinewidth14 = 1493
+    cmiLinewidth15 = 1494
+    cmiLinewidth16 = 1495
+    cmiLinewidth17 = 1496
+    cmiTriggerState = 1497
+
+#   WLM Control Mode Constants
+    cCtrlWLMShow = 1
+    cCtrlWLMHide = 2
+    cCtrlWLMExit = 3
+    cCtrlWLMWait = 0x0010
+    cCtrlWLMStartSilent = 0x0020
+    cCtrlWLMSilent = 0x0040
+
+#  Operation Mode Constants (for "Operation" and "GetOperationState" functions)
+    cStop = 0
+    cAdjustment = 1
+    cMeasurement = 2
+
 
 
 class Error(Exception):
@@ -161,7 +379,7 @@ class wavemeter(object):
         self.df = wavemeter_defs()
 
     def GetWavelengthNum(self, ch):
-        # double GetWavelengthNum(long num, double WL);
+        # double GetWavelengthNum(long num, double WL)
         f = self.wm.GetWavelengthNum
         f.restype = c_double
         f.argtypes = [c_long, c_double]
@@ -171,7 +389,7 @@ class wavemeter(object):
         return res
 
     def GetFrequencyNum(self, ch):
-        # double GetFrequencyNum(long num, double WL);
+        # double GetFrequencyNum(long num, double WL)
         f = self.wm.GetFrequencyNum
         f.restype = c_double
         f.argtypes = [c_long, c_double]
@@ -181,7 +399,7 @@ class wavemeter(object):
         return res
 
     def GetExposureNum(self, ch, ccd):
-        # double GetFrequencyNum(long num, double WL);
+        # double GetFrequencyNum(long num, double WL)
         f = self.wm.GetExposureNum
         f.restype = c_long
         f.argtypes = [c_long, c_long, c_long]
@@ -278,7 +496,17 @@ class wavemeter(object):
         res = f(c_double(val), c_long(uFrom), c_long(uTo))
         return res        
     
-    
+    def WaitForWLMEvent(self):
+        f = self.wm.WaitForWLMEvent
+        f.restype  = c_long
+        f.argtypes = [POINTER(c_long), POINTER(c_long), POINTER(c_double)]
+        mode    = c_long(0)
+        int_val = c_long(0)
+        dbl_val = c_double(0.0)
+        res = f(byref(mode), byref(int_val), byref(dbl_val) )
+        print "WaitForWLMEvent", res, mode.value, int_val.value, dbl_val.value
+        return res, mode.value, int_val.value, dbl_val.value
+        
 # execute this if we started this file
 if __name__ == "__main__":
     w = wavemeter()

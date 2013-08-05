@@ -8,7 +8,6 @@ import BaseHTTPServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 from wavedata import WavemeterData
 
-wd = WavemeterData()
 
 class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -32,6 +31,9 @@ if __name__ == "__main__":
     HandlerClass = WavemeterHTTPRequestHandler
     ServerClass  = BaseHTTPServer.HTTPServer
     Protocol     = "HTTP/1.0"
+    
+    wd = WavemeterData()
+    wd.start()
 
     if sys.argv[1:]:
         port = int(sys.argv[1])
