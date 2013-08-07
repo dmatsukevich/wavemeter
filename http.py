@@ -5,9 +5,12 @@ Created on Jul 31, 2013
 '''
 import sys
 import BaseHTTPServer
+import SocketServer
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 from wavedata import WavemeterData
 
+class ThreadingHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
+    pass
 
 class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -40,7 +43,8 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
 # execute this if we started this file
 if __name__ == "__main__":
     HandlerClass = WavemeterHTTPRequestHandler
-    ServerClass  = BaseHTTPServer.HTTPServer
+#    ServerClass  = BaseHTTPServer.HTTPServer
+    ServerClass  = ThreadingHTTPServer
     Protocol     = "HTTP/1.0"
     
     wd = WavemeterData()
@@ -55,6 +59,7 @@ if __name__ == "__main__":
 
     HandlerClass.protocol_version = Protocol
     httpd = ServerClass(server_address, HandlerClass)
+#    httpd = ThreadingHTTPServer(server_address, HandlerClass)
 
     sa = httpd.socket.getsockname()
     print "Serving HTTP on", sa[0], "port", sa[1], "..."

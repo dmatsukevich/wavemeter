@@ -124,15 +124,19 @@ class WavemeterData(threading.Thread):
     # Notify clients about the new measurement results 
     def notifySSEClients(self, channel):
         message = self.ch[channel].SSEMessage()
-        print message
+#        print message
+        sockets_new = []
         for f in self.sockets:
             try:
                 f.write(message)
-                print "bytes sent to SSE client", f
+                sockets_new.append(f) # copy good socket to a temp. list
+#                print "bytes sent to SSE client", f
             except:
-                self.sockets.remove(f)
+#                self.sockets.remove(f)
                 print "SSE client disconnects"
-            
+
+        # assign list without dead sockets back to the original list
+        self.sockets = sockets_new
             
     def InstantiateWaitFunc(self):
         # Ask wavemeter to call WaitForWLMEvent whenever new data are ready
@@ -149,7 +153,8 @@ class WavemeterData(threading.Thread):
             if (ret == 0):
                 return
             elif (ret == -2):
-                print "Unknown event or error\n"
+#                print "Unknown event or error\n"
+                pass
             
             # Long switch - case to process the data
             # Wavelength
