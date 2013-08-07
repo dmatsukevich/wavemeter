@@ -38,7 +38,7 @@ class ChannelData(object):
         message =  "event: channel\n" 
         message += "data: { \"ch\": " + str(self.channel) + ", "
         if (self.hasdata):
-            message += "\"wavelength\": " + str(self.wavelength)
+            message += "\"wavelength\": \"" + str(self.wavelength) + "\","
         else:
             message += "\"wavelength\": \"" + self.error_msg + "\","
         message += " \"exposure1\": " + str(self.exposure) + ","

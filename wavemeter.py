@@ -504,7 +504,7 @@ class wavemeter(object):
         int_val = c_long(0)
         dbl_val = c_double(0.0)
         res = f(byref(mode), byref(int_val), byref(dbl_val) )
-        print "WaitForWLMEvent", res, mode.value, int_val.value, dbl_val.value
+#        print "WaitForWLMEvent", res, mode.value, int_val.value, dbl_val.value
         return res, mode.value, int_val.value, dbl_val.value
         
 # execute this if we started this file
