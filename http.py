@@ -16,6 +16,8 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
         # special treatment for wavemeter page requests
         if (self.path == "/wavemeter.html"):
             self.wavemeter_html()
+        elif (self.path == "/sse.html"):
+            self.wavemeter_sse()
         else:
             SimpleHTTPRequestHandler.do_GET(self)
 
@@ -25,6 +27,15 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
         wd.writeData(self.wfile)
 
+    def wavemeter_sse(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Connection", "keep-alive")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        self.wfile.write("data: Started connection\n\n")
+        wd.addSSEClient(self.wfile)
 
 # execute this if we started this file
 if __name__ == "__main__":

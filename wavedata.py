@@ -33,8 +33,19 @@ class ChannelData(object):
        
         file.write(message)
             
+    # prints message for server side events
+    def SSEMessage(self):
+        message =  "event: channel\n" 
+        message += "data: { \"ch\": " + str(self.channel) + ", "
+        if (self.hasdata):
+            message += "\"wavelength\": " + str(self.wavelength)
+        else:
+            message += "\"wavelength\": \"" + self.error_msg + "\","
+        message += " \"exposure1\": " + str(self.exposure) + ","
+        message += " \"exposure2\": " + str(self.exposure2) + " }\n\n"
+        return message
         
-        
+    # 
     def setWavelength(self, wavelength):
         if (wavelength > 0):
             self.wavelength = wavelength
@@ -94,6 +105,7 @@ class WavemeterData(threading.Thread):
  
         # Ask for callback function and wait for data
         self.InstantiateWaitFunc()
+        self.sockets = [] # Sockets that are interested in data
             
     def __del__(self):
         w.Instantiate(w.df.cInstNotification, w.df.cNotifyRemoveWaitEvent, 0, 0)
@@ -104,6 +116,23 @@ class WavemeterData(threading.Thread):
     def writeData(self, file):
         for i in range(1, self.nchannels+1):
             self.ch[i].writeData(file)
+            
+    def addSSEClient(self, file):
+        self.sockets.append(file)
+        print len(self.sockets)
+        
+    # Notify clients about the new measurement results 
+    def notifySSEClients(self, channel):
+        message = self.ch[channel].SSEMessage()
+        print message
+        for f in self.sockets:
+            try:
+                f.write(message)
+                print "bytes sent to SSE client", f
+            except:
+                self.sockets.remove(f)
+                print "SSE client disconnects"
+            
             
     def InstantiateWaitFunc(self):
         # Ask wavemeter to call WaitForWLMEvent whenever new data are ready
@@ -126,20 +155,28 @@ class WavemeterData(threading.Thread):
             # Wavelength
             if(mode == w.df.cmiWavelength1): 
                 self.ch[1].setWavelength(DblVal)
+                self.notifySSEClients(1)
             elif (mode == w.df.cmiWavelength2):
                 self.ch[2].setWavelength(DblVal)
+                self.notifySSEClients(2)
             elif (mode == w.df.cmiWavelength3):
                 self.ch[3].setWavelength(DblVal)
+                self.notifySSEClients(3)
             elif (mode == w.df.cmiWavelength4):
                 self.ch[4].setWavelength(DblVal)
+                self.notifySSEClients(4)
             elif (mode == w.df.cmiWavelength5):
                 self.ch[5].setWavelength(DblVal)
+                self.notifySSEClients(5)
             elif (mode == w.df.cmiWavelength6):
                 self.ch[6].setWavelength(DblVal)
+                self.notifySSEClients(6)
             elif (mode == w.df.cmiWavelength7):
                 self.ch[7].setWavelength(DblVal)
+                self.notifySSEClients(7)
             elif (mode == w.df.cmiWavelength8):
                 self.ch[8].setWavelength(DblVal)
+                self.notifySSEClients(8)
             # Exposure values, CCD 1
             elif (mode == w.df.cmiExposureValue11):
                 self.ch[1].setExposure1(IntVal)

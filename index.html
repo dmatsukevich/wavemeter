@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { background-color:#d0e4fe; }
+h1 {color:orange; text-align:center; }
+p { font-family:"Times New Roman"; font-size:20px; }
+table,td,th { border:1px solid black;}
+table { width:100%; }
+th { height:50px; }
+</style>
+</head>
+<body>
+<h1>2nd floor wavemeter</h1>
+
+<table>
+<tr>
+<td><div id="ch1data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch2data", style=height:100px;width:320px;font-size:60px;></div></td>
+</tr>
+<tr>
+<td><div id="ch1info", style=height:20px;width:320px;></div></td>
+<td><div id="ch2info", style=height:20px;width:320px;></div></td>
+</tr>
+<tr>
+<td><div id="ch3data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch4data", style=height:100px;width:320px;font-size:60px;></div></td>
+</tr>
+<tr>
+<td><div id="ch3info", style=height:20px;width:320px;></div></td>
+<td><div id="ch4info", style=height:20px;width:320px;></div></td>
+</tr>
+<tr>
+<td><div id="ch5data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch6data", style=height:100px;width:320px;font-size:60px;></div></td>
+</tr>
+<tr>
+<td><div id="ch5info", style=height:20px;width:320px;></div></td>
+<td><div id="ch6info", style=height:20px;width:320px;></div></td>
+</tr>
+<tr>
+<td><div id="ch7data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch8data", style=height:100px;width:320px;font-size:60px;></div></td>
+</tr>
+<tr>
+<td><div id="ch7info", style=height:20px;width:320px;></div></td>
+<td><div id="ch8info", style=height:20px;width:320px;></div></td>
+</tr>
+</table> 
+
+<div id="result"></div>
+
+<script>
+    
+function display_channel(ch, wl, e1, e2) {
+info = "exposure1 = " + e1 + " exposure2 = " + e2
+if(ch == 1) {  
+   document.getElementById("ch1data").innerHTML =  wl;
+   document.getElementById("ch1info").innerHTML =  info;
+} else if (ch == 2) {
+   document.getElementById("ch2data").innerHTML =  wl;
+   document.getElementById("ch2info").innerHTML =  info;
+} else if (ch == 3) {
+   document.getElementById("ch3data").innerHTML =  wl;
+   document.getElementById("ch3info").innerHTML =  info;
+} else if (ch == 4) {
+   document.getElementById("ch4data").innerHTML =  wl;
+   document.getElementById("ch4info").innerHTML =  info;
+} else if (ch == 5) {
+   document.getElementById("ch5data").innerHTML =  wl;
+   document.getElementById("ch5info").innerHTML =  info;
+} else if (ch == 6) {
+   document.getElementById("ch6data").innerHTML =  wl;
+   document.getElementById("ch6info").innerHTML =  info;
+} else if (ch == 7) {
+   document.getElementById("ch7data").innerHTML =  wl;
+   document.getElementById("ch7info").innerHTML =  info;
+} else if (ch == 8) {
+   document.getElementById("ch8data").innerHTML =  wl;
+   document.getElementById("ch8info").innerHTML =  info;
+}
+};
+
+
+if(typeof(EventSource)!=="undefined")
+{
+  var source=new EventSource("sse.html");
+  source.onmessage=function(event)
+    {
+  	  document.getElementById("result").innerHTML+=event.data + "<br>";
+    };
+  source.onerror=function(event)
+    {
+ 	   document.getElementById("result").innerHTML+="Error: " + event.data + "<br>";
+    };
+  source.addEventListener('channel', function(event) 
+  {
+ 	var data = JSON.parse(event.data);
+    /* document.getElementById("result").innerHTML += "Channel " + data.ch + "<br>"; */  
+	display_channel(data.ch, data.wavelength, data.exposure1, data.exposure2 ); 
+  }  , false); 
+}
+else
+{
+  document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events, ...";
+}
+</script>
+
+</body>
+</html>
+
