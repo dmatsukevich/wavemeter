@@ -6,6 +6,7 @@ Created on Jul 31, 2013
 import sys
 import BaseHTTPServer
 import SocketServer
+import urlparse
 from SimpleHTTPServer import SimpleHTTPRequestHandler
 from wavedata import WavemeterData
 
@@ -21,6 +22,9 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.wavemeter_html()
         elif (self.path == "/sse.html"):
             self.wavemeter_sse()
+#        elif (self.path.find("/control.html") > 0):
+        elif (self.path.find("/control.html") >= 0):
+            self.wavemeter_control()
         else:
             SimpleHTTPRequestHandler.do_GET(self)
 
@@ -39,6 +43,20 @@ class WavemeterHTTPRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write("data: Started connection\n\n")
         wd.addSSEClient(self.wfile)
+        
+    def wavemeter_control(self):
+        self.send_response(200)
+        self.end_headers()
+        query  = urlparse.urlparse(self.path).query
+        params = urlparse.parse_qs(query)
+        try:
+            ch     = params.get('ch', None)[0]
+            action = params.get('action', None)[0]
+            value  = params.get('value', None)[0]
+            wd.controlState(int(ch), action, int(value))
+        except:
+            print "Error parsing parameters", sys.exc_info()
+        self.wfile.write("<OK>")
 
 # execute this if we started this file
 if __name__ == "__main__":

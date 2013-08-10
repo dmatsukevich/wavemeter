@@ -15,71 +15,196 @@ th { height:50px; }
 
 <table>
 <tr>
-<td><div id="ch1data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch1data", style=height:100px;width:320px;font-size:60px;></div></td>
 <td><div id="ch2data", style=height:100px;width:320px;font-size:60px;></div></td>
 </tr>
 <tr>
-<td><div id="ch1info", style=height:20px;width:320px;></div></td>
-<td><div id="ch2info", style=height:20px;width:320px;></div></td>
+<td><input type="checkbox" id="ch1use"  onclick="UseChannel(this, 1)" /> Use
+    <input type="checkbox" id="ch1auto" onclick="AutoChannel(this, 1)" /> Auto
+    <input type="text" id="ch1exp1" onkeypress="handleKeyPress(event, 1, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch1exp2" onkeypress="handleKeyPress(event, 1, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch1info", style=height:10px;width:40px;float:right;></div></td>
+<td><input type="checkbox" id="ch2use"   onclick="UseChannel(this, 2)" /> Use 
+    <input type="checkbox" id="ch2auto" onclick="AutoChannel(this, 2)" /> Auto
+    <input type="text" id="ch2exp1" onkeypress="handleKeyPress(event, 2, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch2exp2" onkeypress="handleKeyPress(event, 2, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch2info", style=height:10px;width:40px;float:right;></div></td>
 </tr>
 <tr>
-<td><div id="ch3data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch3data", style=height:100px;width:320px;font-size:60px;></div></td>
 <td><div id="ch4data", style=height:100px;width:320px;font-size:60px;></div></td>
 </tr>
 <tr>
-<td><div id="ch3info", style=height:20px;width:320px;></div></td>
-<td><div id="ch4info", style=height:20px;width:320px;></div></td>
+<td><input type="checkbox" id="ch3use"   onclick="UseChannel(this, 3)" /> Use 
+    <input type="checkbox" id="ch3auto" onclick="AutoChannel(this, 3)" /> Auto
+    <input type="text" id="ch3exp1" onkeypress="handleKeyPress(event, 3, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch3exp2" onkeypress="handleKeyPress(event, 3, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch2info", style=height:10px;width:40px;float:right;></div></td>
+<td><input type="checkbox" id="ch4use"   onclick="UseChannel(this, 4)" /> Use 
+    <input type="checkbox" id="ch4auto" onclick="AutoChannel(this, 4)" /> Auto
+    <input type="text" id="ch4exp1" onkeypress="handleKeyPress(event, 4, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch4exp2" onkeypress="handleKeyPress(event, 4, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch2info", style=height:10px;width:40px;float:right;></div></td>
 </tr>
 <tr>
-<td><div id="ch5data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch5data", style=height:100px;width:320px;font-size:60px;></div></td>
 <td><div id="ch6data", style=height:100px;width:320px;font-size:60px;></div></td>
 </tr>
 <tr>
-<td><div id="ch5info", style=height:20px;width:320px;></div></td>
-<td><div id="ch6info", style=height:20px;width:320px;></div></td>
+<td><input type="checkbox" id="ch5use"   onclick="UseChannel(this, 5)" /> Use 
+    <input type="checkbox" id="ch5auto" onclick="AutoChannel(this, 5)" /> Auto
+    <input type="text" id="ch5exp1" onkeypress="handleKeyPress(event, 5, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch5exp2" onkeypress="handleKeyPress(event, 5, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch5info", style=height:10px;width:40px;float:right;></div></td>
+<td><input type="checkbox" id="ch6use"   onclick="UseChannel(this, 6)" /> Use 
+    <input type="checkbox" id="ch6auto" onclick="AutoChannel(this, 6)" /> Auto
+    <input type="text" id="ch6exp1" onkeypress="handleKeyPress(event, 6, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch6exp2" onkeypress="handleKeyPress(event, 6, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch6info", style=height:10px;width:40px;float:right;></div></td>
 </tr>
 <tr>
-<td><div id="ch7data", style=height:100px;width:320px;font-size:60px;"></div></td>
+<td><div id="ch7data", style=height:100px;width:320px;font-size:60px;></div></td>
 <td><div id="ch8data", style=height:100px;width:320px;font-size:60px;></div></td>
 </tr>
 <tr>
-<td><div id="ch7info", style=height:20px;width:320px;></div></td>
-<td><div id="ch8info", style=height:20px;width:320px;></div></td>
+<td><input type="checkbox" id="ch7use"   onclick="UseChannel(this, 7)" /> Use 
+    <input type="checkbox" id="ch7auto" onclick="AutoChannel(this, 7)" /> Auto
+    <input type="text" id="ch7exp1" onkeypress="handleKeyPress(event, 7, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch7exp2" onkeypress="handleKeyPress(event, 7, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch7info", style=height:10px;width:40px;float:right;></div></td>
+<td><input type="checkbox" id="ch8use"   onclick="UseChannel(this, 8)" /> Use 
+    <input type="checkbox" id="ch8auto" onclick="AutoChannel(this, 8)" /> Auto
+    <input type="text" id="ch8exp1" onkeypress="handleKeyPress(event, 8, 1)" style="width: 30px;" /> Exp. 
+    <input type="text" id="ch8exp2" onkeypress="handleKeyPress(event, 8, 2)" style="width: 30px;" /> + Exp2, 
+    <div id="ch2info", style=height:10px;width:40px;float:right;></div></td>
 </tr>
 </table> 
 
 <div id="result"></div>
 
 <script>
-    
+
+function UseChannel(checkbox, channel) {
+	if (checkbox.checked) value = 1;
+	else value = 0;
+	url = "/control.html?ch=" + channel + "&action=use&value=" + value;
+	httpGet(url);
+};
+
+function AutoChannel(checkbox, channel) {
+	if (checkbox.checked) value = 1;
+	else value = 0;
+	url = "/control.html?ch=" + channel + "&action=auto&value=" + value;
+	httpGet(url);
+};
+
+function Exposure(channel, ccd, value) {
+	if (ccd == 1)
+		url = "/control.html?ch=" + channel + "&action=exp1&value=" + value;
+	else
+		url = "/control.html?ch=" + channel + "&action=exp2&value=" + value;
+	httpGet(url);
+};
+
+function handleKeyPress(e, ch, ccd){
+  var key=e.keyCode || e.which;
+  value = e.target.value
+  if (key==13){
+/*  	value = document.getElementById("ch1exp1").value */
+    Exposure(ch, ccd, value);
+  }
+}
+
+function httpGet(theUrl) {
+   var xmlHttp = null;
+
+   xmlHttp = new XMLHttpRequest();
+   xmlHttp.open( "GET", theUrl, false );
+   xmlHttp.send( null );
+   return xmlHttp.responseText;
+};
+
 function display_channel(ch, wl, e1, e2) {
-info = "exposure1 = " + e1 + " exposure2 = " + e2
 if(ch == 1) {  
    document.getElementById("ch1data").innerHTML =  wl;
-   document.getElementById("ch1info").innerHTML =  info;
+   document.getElementById("ch1exp1").value     =  e1;
+   document.getElementById("ch1exp2").value     =  e2;
 } else if (ch == 2) {
    document.getElementById("ch2data").innerHTML =  wl;
-   document.getElementById("ch2info").innerHTML =  info;
+   document.getElementById("ch2exp1").value     =  e1;
+   document.getElementById("ch2exp2").value     =  e2;
 } else if (ch == 3) {
    document.getElementById("ch3data").innerHTML =  wl;
-   document.getElementById("ch3info").innerHTML =  info;
+   document.getElementById("ch3exp1").value     =  e1;
+   document.getElementById("ch3exp2").value     =  e2;
 } else if (ch == 4) {
    document.getElementById("ch4data").innerHTML =  wl;
-   document.getElementById("ch4info").innerHTML =  info;
+   document.getElementById("ch4exp1").value     =  e1;
+   document.getElementById("ch4exp2").value     =  e2;
 } else if (ch == 5) {
    document.getElementById("ch5data").innerHTML =  wl;
-   document.getElementById("ch5info").innerHTML =  info;
+   document.getElementById("ch5exp1").value     =  e1;
+   document.getElementById("ch5exp2").value     =  e2;
 } else if (ch == 6) {
    document.getElementById("ch6data").innerHTML =  wl;
-   document.getElementById("ch6info").innerHTML =  info;
+   document.getElementById("ch6exp1").value     =  e1;
+   document.getElementById("ch6exp2").value     =  e2;
 } else if (ch == 7) {
    document.getElementById("ch7data").innerHTML =  wl;
-   document.getElementById("ch7info").innerHTML =  info;
+   document.getElementById("ch7exp1").value     =  e1;
+   document.getElementById("ch7exp2").value     =  e2;
 } else if (ch == 8) {
    document.getElementById("ch8data").innerHTML =  wl;
-   document.getElementById("ch8info").innerHTML =  info;
+   document.getElementById("ch8exp1").value     =  e1;
+   document.getElementById("ch8exp2").value     =  e2;
 }
 };
+
+
+function display_control(ch, use, auto, e1, e2) {
+if(ch == 1) {  
+   document.getElementById("ch1use").checked  =  (use == 1);
+   document.getElementById("ch1auto").checked = (auto == 1);
+   document.getElementById("ch1exp1").value     =  e1;
+   document.getElementById("ch1exp2").value     =  e2;
+} else if (ch == 2) {
+   document.getElementById("ch2use").checked  =  (use == 1);
+   document.getElementById("ch2auto").checked = (auto == 1);
+   document.getElementById("ch2exp1").value     =  e1;
+   document.getElementById("ch2exp2").value     =  e2;
+} else if (ch == 3) {
+   document.getElementById("ch3use").checked  =  (use == 1);
+   document.getElementById("ch3auto").checked = (auto == 1);
+   document.getElementById("ch3exp1").value     =  e1;
+   document.getElementById("ch3exp2").value     =  e2;
+} else if (ch == 4) {
+   document.getElementById("ch4use").checked  =  (use == 1);
+   document.getElementById("ch4auto").checked = (auto == 1);
+   document.getElementById("ch4exp1").value     =  e1;
+   document.getElementById("ch4exp2").value     =  e2;
+} else if (ch == 5) {
+   document.getElementById("ch5use").checked  =  (use == 1);
+   document.getElementById("ch5auto").checked = (auto == 1);
+   document.getElementById("ch5exp1").value     =  e1;
+   document.getElementById("ch5exp2").value     =  e2;
+} else if (ch == 6) {
+   document.getElementById("ch6use").checked  =  (use == 1);
+   document.getElementById("ch6auto").checked = (auto == 1);
+   document.getElementById("ch6exp1").value     =  e1;
+   document.getElementById("ch6exp2").value     =  e2;
+} else if (ch == 7) {
+   document.getElementById("ch7use").checked  =  (use == 1);
+   document.getElementById("ch7auto").checked = (auto == 1);
+   document.getElementById("ch7exp1").value     =  e1;
+   document.getElementById("ch7exp2").value     =  e2;
+} else if (ch == 8) {
+   document.getElementById("ch8use").checked  =  (use == 1);
+   document.getElementById("ch8auto").checked = (auto == 1);
+   document.getElementById("ch8exp1").value     =  e1;
+   document.getElementById("ch8exp2").value     =  e2;
+}
+};
+
 
 
 if(typeof(EventSource)!=="undefined")
@@ -99,10 +224,17 @@ if(typeof(EventSource)!=="undefined")
     /* document.getElementById("result").innerHTML += "Channel " + data.ch + "<br>"; */  
 	display_channel(data.ch, data.wavelength, data.exposure1, data.exposure2 ); 
   }  , false); 
+  source.addEventListener('control', function(event) 
+  {
+ 	var data = JSON.parse(event.data);
+ 	display_control(data.ch, data.use, data.auto, data.exposure1, data.exposure2 ); 
+  }  , false); 
+  
 }
 else
 {
-  document.getElementById("result").innerHTML="Sorry, your browser does not support server-sent events, ...";
+  document.getElementById("result").innerHTML=
+  	"Sorry, your browser does not support server-sent events, ...";
 }
 </script>
 

@@ -451,7 +451,7 @@ class wavemeter(object):
         use  = c_long(0)
         show = c_long(0)
         res = f(c_long(signal), byref(use), byref(show) )
-        if (res <= 0):
+        if (res < 0):
             raise GetFuncError(res)
         return res, use.value, show.value
         
@@ -470,6 +470,16 @@ class wavemeter(object):
         if (res <= 0):
             raise GetFuncError(res)
         return res
+    
+    def GetPowerNum(self, ch):
+        f = self.wm.GetPowerNum
+        f.restype = c_double
+        f.argtypes = [c_long, c_double]
+        res = f(c_long(ch), c_double(0.0))
+        if (res <= 0):
+            raise GetFuncError(res)
+        return res        
+         
          
     def GetSwitcherMode(self):
         f = self.wm.GetSwitcherMode
@@ -487,6 +497,33 @@ class wavemeter(object):
         res = f(c_long(mode))
         if (res < 0):
             raise SetFuncError(res)
+        return res                    
+
+    def SetExposureNum(self, ch, ccd, exposure):
+        f = self.wm.SetExposureNum
+        f.restype = c_long
+        f.argtypes = [c_long, c_long, c_long]
+        res = f(c_long(ch), c_long(ccd), c_long(exposure) )
+        if (res < 0):
+            raise SetFuncError(res)
+        return res        
+    
+    def SetExposureModeNum(self, ch, mode):
+        f = self.wm.SetExposureModeNum
+        f.restype = c_long
+        f.argtypes = [c_long, c_long]
+        res = f(c_long(ch), c_long(mode) )
+        if (res < 0):
+            raise SetFuncError(res)
+        return res        
+       
+    def GetExposureModeNum(self, ch):
+        f = self.wm.SetExposureModeNum
+        f.restype = c_long
+        f.argtypes = [c_long, c_long]
+        res = f(c_long(ch), c_long(0))
+        if (res < 0):
+            raise GetFuncError(res)
         return res        
        
     def ConvertUnit(self, val, uFrom, uTo):
