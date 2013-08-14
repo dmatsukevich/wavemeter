@@ -46,7 +46,7 @@ class ChannelData(object):
             message += "\"wavelength\": \"" + self.error_msg + "\","
         message += " \"exposure1\": " + str(self.exposure) + ","
         message += " \"exposure2\": " + str(self.exposure2) + " }\n\n"
-        print message
+#        print message
         return message
 
     def SSEControlMessage(self):
@@ -56,7 +56,7 @@ class ChannelData(object):
         message += "\"auto\": " + str(self.autoexposure) + ", "
         message += "\"exposure1\": " + str(self.exposure) + ", "
         message += "\"exposure2\": " + str(self.exposure2) + " }\n\n"
-        print message
+#        print message
         return message
         
     # 
@@ -152,21 +152,21 @@ class WavemeterData(threading.Thread):
             file.write(self.ch[i].SSEMessage())
             file.write(self.ch[i].SSEControlMessage())
         self.sockets.append(file)
-        print len(self.sockets)
+        print len(self.sockets), " clients connnected"
         
     # change the controls according to the user requests from the web
     def controlState(self, channel, action, value):  
-        print channel, action, value
+#        print channel, action, value
         if (action == "use"):
             res, use, show = w.GetSwitcherSignalStates(channel)
             use = value
             res = w.SetSwitcherSignalStates(channel, use, show)
             self.ch[channel].setUse(use, show)
-            print "SetSwitcherSignalStates ", res
+#            print "SetSwitcherSignalStates ", res
         elif (action == "auto"):
             res = w.SetExposureModeNum(channel, value)
             self.ch[channel].setAuto(value)
-            print "SetExposureModeNum ", res
+#            print "SetExposureModeNum ", res
         elif (action == "exp1"):
             res = w.SetExposureNum(channel, 1, value)
             self.ch[channel].setExposure1(value)
