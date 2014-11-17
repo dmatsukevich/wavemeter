@@ -340,13 +340,13 @@ class GetFuncError(Error):
 
     def message(self, value):
         return {
-        wavemeter_defs.ErrNoValue: "No value",
-        wavemeter_defs.ErrNoSignal: "No signal",
+        wavemeter_defs.ErrNoValue: "_", # No value
+        wavemeter_defs.ErrNoSignal: "No signal", # No signal
         wavemeter_defs.ErrBadSignal: "Bad signal",
         wavemeter_defs.ErrLowSignal: "Low signal",
         wavemeter_defs.ErrBigSignal: "Big signal",
         wavemeter_defs.ErrWlmMissing: "Wavemeter is missing",
-        wavemeter_defs.ErrNotAvailable: "Not avalible",
+        wavemeter_defs.ErrNotAvailable: "Not available",
         wavemeter_defs.InfNothingChanged: "Nothing changed",
         wavemeter_defs.ErrNoPulse: "No pulse",
         wavemeter_defs.ErrDiv0: "Divide by 0",

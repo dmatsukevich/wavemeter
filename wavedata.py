@@ -11,6 +11,8 @@ import threading
 
 w = wavemeter()
 
+WM_CHANNEL_TIMEOUT = 60
+
 class ChannelData(object):
     def __init__(self, channel):
         self.channel    = channel
@@ -21,9 +23,11 @@ class ChannelData(object):
         self.exposure   = 0
         self.exposure2  = 0
         self.error      = 0
-        self.error_msg  = "No signal"
+        self.error_msg  = "_"
         self.hasdata    = False
-        self.geterr     = GetFuncError(0) # We are interested in the message text onlt
+        self.geterr     = GetFuncError(0) # We are interested in the message text only
+        self.oktime     = time.time()
+        self.errtime    = self.oktime
     
     # Prints data for a web page
     def writeData(self, file):
@@ -71,7 +75,7 @@ class ChannelData(object):
             if (self.hasdata):
                 self.errtime   = time.time()
                 self.hasdata   = False
- 
+
         
     def setExposure(self, exposure, exposure2):
         self.exposure  = exposure
@@ -93,10 +97,21 @@ class ChannelData(object):
     def setUse(self, use, show):
         self.use  = use
         self.show = show
+        if (self.use != 0): # Update all the timestamps when we enable the channel
+            self.oktime = time.time()
+            self.errtime = self.oktime
         
     def setAuto(self, auto):
         self.autoexposure = auto
-            
+
+    # Tells if the channel has to be shut down because there is no light
+    def checkAutoOff(self):
+        current_time = time.time()
+        if (self.use > 0) and (current_time - self.oktime > WM_CHANNEL_TIMEOUT):
+            return True
+        else:
+            return False
+
     def readWavelength(self):
         try:
             wavelength = w.GetWavelengthNum(self.channel)
@@ -129,14 +144,15 @@ class WavemeterData(threading.Thread):
             auto = w.GetExposureModeNum(i)
             self.ch[i].setAuto(auto)
             self.ch[i].readExposure()
-            
 
-            
- 
         # Ask for callback function and wait for data
         self.InstantiateWaitFunc()
         self.sockets = [] # Sockets that are interested in data
-            
+
+        self.cur_channels  = []
+        self.prev_channels = []
+
+    # Class destructor, removes wait for event callback
     def __del__(self):
         w.Instantiate(w.df.cInstNotification, w.df.cNotifyRemoveWaitEvent, 0, 0)
     
@@ -152,7 +168,7 @@ class WavemeterData(threading.Thread):
             file.write(self.ch[i].SSEMessage())
             file.write(self.ch[i].SSEControlMessage())
         self.sockets.append(file)
-        print len(self.sockets), " clients connnected"
+        print len(self.sockets), " clients connected"
         
     # change the controls according to the user requests from the web
     def controlState(self, channel, action, value):  
@@ -162,6 +178,9 @@ class WavemeterData(threading.Thread):
             use = value
             res = w.SetSwitcherSignalStates(channel, use, show)
             self.ch[channel].setUse(use, show)
+            if (use == 0):
+                self.ch[channel].setWavelength(0)
+                self.notifySSEData(channel)
 #            print "SetSwitcherSignalStates ", res
         elif (action == "auto"):
             res = w.SetExposureModeNum(channel, value)
@@ -174,12 +193,29 @@ class WavemeterData(threading.Thread):
             res = w.SetExposureNum(channel, 2, value)
             self.ch[channel].setExposure2(value)
         else:
-            print "Unknow action ", action
+            print "Unknown action ", action
             return
         
         self.notifySSEControl(channel)
-            
-            
+
+    # Called when the new wave length data from the wave meter are received
+    # checks if the channel status was changed in the wavemeter program directly
+    # and notifies the web clients
+    # Disables the channel if the channel gives the error for too long
+    def updateChannelState(self, channel):
+        # We get the data from the channel that is labelled inactive, fix it
+        self.trackActiveChannels(channel)
+        # if the channel is under / over exposed for a long time
+        if (self.ch[channel].checkAutoOff()):
+            self.ch[channel].setWavelength(0)
+            res, use, show = w.GetSwitcherSignalStates(channel)
+            use = 0
+            res = w.SetSwitcherSignalStates(channel, use, show)
+            self.ch[channel].setUse(use, show)
+            self.notifySSEData(channel)
+            self.notifySSEControl(channel)
+            print channel, "switched off automatically"
+             
     # Notify clients about the new measurement results 
     def notifySSEClients(self, channel, message):
 #        print message
@@ -207,7 +243,26 @@ class WavemeterData(threading.Thread):
         # Ask wavemeter to call WaitForWLMEvent whenever new data are ready
         res = w.Instantiate(w.df.cInstNotification, w.df.cNotifyInstallWaitEvent, -1, 0)
         print "Instantiate = ", res
-        
+
+
+    # Keep track which channels are active, and update the settings
+    def trackActiveChannels(self, channel):
+        if (channel in self.cur_channels):
+            changes = set(self.cur_channels).symmetric_difference(self.prev_channels) # finds which channels have changed
+            for c in changes:
+                res, use, show = w.GetSwitcherSignalStates(c)
+                self.ch[c].setUse(use, show)
+                if use == 0:
+                    self.ch[c].setWavelength(0)
+                    self.notifySSEData(c)
+                self.notifySSEControl(c)
+                print c
+            self.prev_channels = self.cur_channels
+            self.cur_channels  = [channel]
+        else:
+            self.cur_channels.append(channel)
+
+
     # Main function: gets data in a loop and updates  
     def WaitForData(self):
         while(True):
@@ -226,27 +281,35 @@ class WavemeterData(threading.Thread):
             if(mode == w.df.cmiWavelength1): 
                 self.ch[1].setWavelength(DblVal)
                 self.notifySSEData(1)
+                self.updateChannelState(1)
             elif (mode == w.df.cmiWavelength2):
                 self.ch[2].setWavelength(DblVal)
                 self.notifySSEData(2)
+                self.updateChannelState(2)
             elif (mode == w.df.cmiWavelength3):
                 self.ch[3].setWavelength(DblVal)
                 self.notifySSEData(3)
+                self.updateChannelState(3)
             elif (mode == w.df.cmiWavelength4):
                 self.ch[4].setWavelength(DblVal)
                 self.notifySSEData(4)
+                self.updateChannelState(4)
             elif (mode == w.df.cmiWavelength5):
                 self.ch[5].setWavelength(DblVal)
                 self.notifySSEData(5)
+                self.updateChannelState(5)
             elif (mode == w.df.cmiWavelength6):
                 self.ch[6].setWavelength(DblVal)
                 self.notifySSEData(6)
+                self.updateChannelState(6)
             elif (mode == w.df.cmiWavelength7):
                 self.ch[7].setWavelength(DblVal)
                 self.notifySSEData(7)
+                self.updateChannelState(7)
             elif (mode == w.df.cmiWavelength8):
                 self.ch[8].setWavelength(DblVal)
                 self.notifySSEData(8)
+                self.updateChannelState(8)
             # Exposure values, CCD 1
             elif (mode == w.df.cmiExposureValue11):
                 self.ch[1].setExposure1(IntVal)
@@ -284,6 +347,6 @@ class WavemeterData(threading.Thread):
             # Exposure
             elif (mode == w.df.cmiExposureMode):
                 pass
-
-        
+#            else:
+#                print mode, IntVal, DblVal
         
