@@ -207,14 +207,17 @@ class WavemeterData(threading.Thread):
         self.trackActiveChannels(channel)
         # if the channel is under / over exposed for a long time
         if (self.ch[channel].checkAutoOff()):
-            self.ch[channel].setWavelength(0)
-            res, use, show = w.GetSwitcherSignalStates(channel)
-            use = 0
-            res = w.SetSwitcherSignalStates(channel, use, show)
-            self.ch[channel].setUse(use, show)
-            self.notifySSEData(channel)
-            self.notifySSEControl(channel)
-            print channel, "switched off automatically"
+            try:
+#                res, use, show = w.GetSwitcherSignalStates(channel)
+#                use = 0
+                res = w.SetSwitcherSignalStates(channel, 0, 0)
+                self.ch[channel].setWavelength(0)
+                self.ch[channel].setUse(0, 0)
+                self.notifySSEData(channel)
+                self.notifySSEControl(channel)
+                print channel, "switched off automatically"
+            except SetFuncError as e:
+                print "Error switching off a channel: ", res, e
              
     # Notify clients about the new measurement results 
     def notifySSEClients(self, channel, message):
