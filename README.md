@@ -1,5 +1,5 @@
 # wavemeter
-A web interface for [Toptica / HiFinesse / Angstrom](https://www.highfinesse.com/en/wavelengthmeter/index.html
+A web interface for [Toptica / HighFinesse / Angstrom](https://www.highfinesse.com/en/wavelengthmeter/index.html
 ) wavemeter with a fiber switch option.
 
 Uses Python2 under Windows. The program starts a simple python web server at the port 8000 to monitor wavelength of the lasers via a web browser.
